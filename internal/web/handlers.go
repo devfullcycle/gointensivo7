@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
+	"time"
 
 	"books/internal/service"
 )
@@ -115,4 +116,27 @@ func (h *BookHandlers) DeleteBook(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusNoContent)
+}
+
+func (h *BookHandlers) SimulateReading(w http.ResponseWriter, r *http.Request) {
+	var request struct {
+		BookIDs []int `json:"book_ids"`
+	}
+
+	// Decodifica o JSON recebido no corpo da requisição
+	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		return
+	}
+
+	if len(request.BookIDs) == 0 {
+		http.Error(w, "No book IDs provided", http.StatusBadRequest)
+		return
+	}
+
+	// Chama o serviço para simular a leitura de múltiplos livros
+	response := h.service.SimulateMultipleReadings(request.BookIDs, 2*time.Second)
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
 }

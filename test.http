@@ -29,3 +29,11 @@ Content-Type: application/json
 
 ### Deletar um livro
 DELETE http://localhost:8080/books/1
+
+### Simular leitura de múltiplos livros via POST com JSON
+POST http://localhost:8080/simulate-reading
+Content-Type: application/json
+
+{
+  "book_ids": [1, 2, 3]
+}
