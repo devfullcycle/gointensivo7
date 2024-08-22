@@ -1,10 +1,10 @@
 ### Listar todos os livros
-GET http://localhost:8080/books
+GET https://gobooks-hepraaveza-uc.a.run.app/books
 Accept: application/json
 
 
 ### Adicionar um novo livro
-POST http://localhost:8080/books
+POST https://gobooks-hepraaveza-uc.a.run.app/books
 Content-Type: application/json
 
 {
